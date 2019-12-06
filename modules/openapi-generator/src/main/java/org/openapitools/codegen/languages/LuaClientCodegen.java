@@ -1,45 +1,28 @@
-/*
- * Copyright 2018 OpenAPI-Generator Contributors (https://openapi-generator.tech)
- * Copyright 2018 SmartBear Software
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+package io.swagger.codegen.languages;
 
-package org.openapitools.codegen.languages;
-
-import io.swagger.v3.oas.models.media.ArraySchema;
-import io.swagger.v3.oas.models.media.Schema;
-import org.apache.commons.lang3.StringUtils;
-import org.openapitools.codegen.*;
-import org.openapitools.codegen.utils.ModelUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import io.swagger.codegen.*;
+import io.swagger.models.properties.ArrayProperty;
+import io.swagger.models.properties.MapProperty;
+import io.swagger.models.properties.Property;
+import io.swagger.models.parameters.Parameter;
 
 import java.io.File;
 import java.util.*;
 
-import static org.openapitools.codegen.utils.StringUtils.camelize;
-import static org.openapitools.codegen.utils.StringUtils.underscore;
+import org.apache.commons.lang3.StringUtils;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class LuaClientCodegen extends DefaultCodegen implements CodegenConfig {
-    private static final Logger LOGGER = LoggerFactory.getLogger(LuaClientCodegen.class);
+    static Logger LOGGER = LoggerFactory.getLogger(LuaClientCodegen.class);
 
     protected String specFolder = "spec";
-    protected String packageName = "openapiclient";
+    protected String packageName = "swagger-client";
     protected String packageVersion = "1.0.0-1";
     protected String apiDocPath = "docs/";
     protected String modelDocPath = "docs/";
-    protected String luaRocksFilename = "openapiclient-1.0.0-1.rockspec";
+    protected String luaRocksFilename = "swagger-client-1.0.0-1.rockspec";
 
     public CodegenType getTag() {
         return CodegenType.CLIENT;
@@ -108,7 +91,6 @@ public class LuaClientCodegen extends DefaultCodegen implements CodegenConfig {
         typeMapping.put("boolean", "boolean");
         typeMapping.put("string", "string");
         typeMapping.put("UUID", "string");
-        typeMapping.put("URI", "string");
         typeMapping.put("date", "string");
         typeMapping.put("DateTime", "string");
         typeMapping.put("password", "string");
@@ -126,8 +108,8 @@ public class LuaClientCodegen extends DefaultCodegen implements CodegenConfig {
         importMapping.put("os", "io/ioutil");
 
         cliOptions.clear();
-        cliOptions.add(new CliOption(CodegenConstants.PACKAGE_NAME, "Lua package name (convention: single word).")
-                .defaultValue("openapiclient"));
+        cliOptions.add(new CliOption(CodegenConstants.PACKAGE_NAME, "Lua package name (convention: lowercase).")
+                .defaultValue("swagger-client"));
         cliOptions.add(new CliOption(CodegenConstants.PACKAGE_VERSION, "Lua package version.")
                 .defaultValue("1.0.0-1"));
         cliOptions.add(new CliOption(CodegenConstants.HIDE_GENERATION_TIMESTAMP, CodegenConstants.HIDE_GENERATION_TIMESTAMP_DESC)
@@ -331,44 +313,45 @@ public class LuaClientCodegen extends DefaultCodegen implements CodegenConfig {
     }
 
     @Override
-    public String getTypeDeclaration(Schema p) {
-        if (ModelUtils.isArraySchema(p)) {
-            ArraySchema ap = (ArraySchema) p;
-            Schema inner = ap.getItems();
+    public String getTypeDeclaration(Property p) {
+        if (p instanceof ArrayProperty) {
+            ArrayProperty ap = (ArrayProperty) p;
+            Property inner = ap.getItems();
             return getTypeDeclaration(inner);
-        } else if (ModelUtils.isMapSchema(p)) {
-            Schema inner = ModelUtils.getAdditionalProperties(p);
+        } else if (p instanceof MapProperty) {
+            MapProperty mp = (MapProperty) p;
+            Property inner = mp.getAdditionalProperties();
             return getTypeDeclaration(inner);
         }
 
         // Not using the supertype invocation, because we want to UpperCamelize
         // the type.
-        String schemaType = getSchemaType(p);
-        if (typeMapping.containsKey(schemaType)) {
-            return typeMapping.get(schemaType);
+        String swaggerType = getSwaggerType(p);
+        if (typeMapping.containsKey(swaggerType)) {
+            return typeMapping.get(swaggerType);
         }
 
-        if (typeMapping.containsValue(schemaType)) {
-            return schemaType;
+        if (typeMapping.containsValue(swaggerType)) {
+            return swaggerType;
         }
 
-        if (languageSpecificPrimitives.contains(schemaType)) {
-            return schemaType;
+        if (languageSpecificPrimitives.contains(swaggerType)) {
+            return swaggerType;
         }
 
-        return toModelName(schemaType);
+        return toModelName(swaggerType);
     }
 
     @Override
-    public String getSchemaType(Schema p) {
-        String schemaType = super.getSchemaType(p);
+    public String getSwaggerType(Property p) {
+        String swaggerType = super.getSwaggerType(p);
         String type = null;
-        if (typeMapping.containsKey(schemaType)) {
-            type = typeMapping.get(schemaType);
+        if (typeMapping.containsKey(swaggerType)) {
+            type = typeMapping.get(swaggerType);
             if (languageSpecificPrimitives.contains(type))
                 return (type);
         } else {
-            type = schemaType;
+            type = swaggerType;
         }
         return type;
     }
@@ -387,7 +370,7 @@ public class LuaClientCodegen extends DefaultCodegen implements CodegenConfig {
     }
 
     @Override
-    public Map<String, Object> postProcessOperationsWithModels(Map<String, Object> objs, List<Object> allModels) {
+    public Map<String, Object> postProcessOperations(Map<String, Object> objs) {
         @SuppressWarnings("unchecked")
         Map<String, Object> objectMap = (Map<String, Object>) objs.get("operations");
         @SuppressWarnings("unchecked")
@@ -403,7 +386,7 @@ public class LuaClientCodegen extends DefaultCodegen implements CodegenConfig {
                     // find the datatype of the parameter
                     //final CodegenParameter cp = op.pathParams.get(pathParamIndex);
                     // TODO: Handle non-primitives…
-                    //luaPath = luaPath + cp.dataType.toLowerCase(Locale.ROOT);
+                    //luaPath = luaPath + cp.dataType.toLowerCase();
                     luaPath = luaPath + "/%s";
                     pathParamIndex++;
                 } else if (items[i].length() != 0) {
@@ -514,11 +497,11 @@ public class LuaClientCodegen extends DefaultCodegen implements CodegenConfig {
 
         // for symbol, e.g. $, #
         if (getSymbolName(name) != null) {
-            return getSymbolName(name).toUpperCase(Locale.ROOT);
+            return getSymbolName(name).toUpperCase();
         }
 
         // string
-        String enumName = sanitizeName(underscore(name).toUpperCase(Locale.ROOT));
+        String enumName = sanitizeName(underscore(name).toUpperCase());
         enumName = enumName.replaceFirst("^_", "");
         enumName = enumName.replaceFirst("_$", "");
 
@@ -531,7 +514,7 @@ public class LuaClientCodegen extends DefaultCodegen implements CodegenConfig {
 
     @Override
     public String toEnumName(CodegenProperty property) {
-        String enumName = underscore(toModelName(property.name)).toUpperCase(Locale.ROOT);
+        String enumName = underscore(toModelName(property.name)).toUpperCase();
 
         // remove [] for array or map of enum
         enumName = enumName.replace("[]", "");
@@ -552,3 +535,4 @@ public class LuaClientCodegen extends DefaultCodegen implements CodegenConfig {
         return name;
     }
 }
+
