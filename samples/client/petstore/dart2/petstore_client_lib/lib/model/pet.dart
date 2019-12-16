@@ -1,5 +1,5 @@
-part of openapi.api;
-
+import 'package:petstore_client_lib/model/category.dart';
+import 'package:petstore_client_lib/model/tag.dart';
 class Pet {
   
   int id = null;

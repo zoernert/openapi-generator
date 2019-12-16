@@ -1,5 +1,3 @@
-part of openapi.api;
-
 class User {
   
   int id = null;

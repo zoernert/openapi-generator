@@ -1,5 +1,3 @@
-part of openapi.api;
-
 class ApiResponse {
   
   int code = null;
