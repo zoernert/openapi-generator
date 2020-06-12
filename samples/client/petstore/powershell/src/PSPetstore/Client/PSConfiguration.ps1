@@ -404,7 +404,7 @@ a key. The 'Authorization' header is added to outbound HTTP requests.
 Ref: https://openapi-generator.tech
 
 .PARAMETER KeyId
-KeyId for HTTP signing 
+KeyId for HTTP signing
 
 .PARAMETER KeyFilePath
 KeyFilePath for HTTP signing
@@ -475,11 +475,11 @@ function Set-PSConfigurationHttpSigning {
             }
         }
 
-        if ($keyType -eq "RSA" -and 
+        if ($keyType -eq "RSA" -and
             ($SigningAlgorithm -ne "RSASSA-PKCS1-v1_5" -and $SigningAlgorithm -ne "RSASSA-PSS" )) {
             throw "Provided Key and SigningAlgorithm : $SigningAlgorithm is not compatible."
         }
-    
+
         if ($HttpSigningHeader -contains "(expires)" -and $SignatureValidityPeriod -le 0) {
             throw "SignatureValidityPeriod must be greater than 0 seconds."
         }
@@ -487,6 +487,7 @@ function Set-PSConfigurationHttpSigning {
         if ($HttpSigningHeader -contains "(expires)") {
             $httpSignatureConfiguration["SignatureValidityPeriod"] = $SignatureValidityPeriod
         }
+
         if ($null -ne $HttpSigningHeader -and $HttpSigningHeader.Length -gt 0) {
             $httpSignatureConfiguration["HttpSigningHeader"] = $HttpSigningHeader
         }
@@ -502,7 +503,7 @@ function Set-PSConfigurationHttpSigning {
         if ($null -ne $KeyPassPhrase) {
             $httpSignatureConfiguration["KeyPassPhrase"] = $KeyPassPhrase
         }
-    
+
         $Script:Configuration["HttpSigning"] = New-Object -TypeName PSCustomObject -Property $httpSignatureConfiguration
     }
 }

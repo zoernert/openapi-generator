@@ -64,7 +64,7 @@ namespace RSAEncryption
                 return binkey;
             }
             catch (System.FormatException)
-            {       
+            {
                 StringReader str = new StringReader(pvkstr);
 
                 //-------- read PEM encryption info. lines and extract salt -----

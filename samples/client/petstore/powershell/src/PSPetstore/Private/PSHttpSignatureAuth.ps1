@@ -9,7 +9,7 @@
 .SYNOPSIS
     Gets the headers for HTTP signature.
 .DESCRIPTION
-    Gets the headers for the http sigature. 
+    Gets the headers for the http sigature.
 .PARAMETER Method
     HTTP method
 .PARAMETER UriBuilder
@@ -50,7 +50,7 @@ function Get-PSHttpSignedHeader {
     $TargetHost = $UriBuilder.Host
     $httpSigningConfiguration = Get-PSConfigurationHttpSigning
     $Digest = $null
-    
+ 
     #get the body digest
     $bodyHash = Get-PSStringHash -String $Body -HashName $httpSigningConfiguration.HashAlgorithm
     if ($httpSigningConfiguration.HashAlgorithm -eq "SHA256") {
@@ -59,14 +59,14 @@ function Get-PSHttpSignedHeader {
     elseif ($httpSigningConfiguration.HashAlgorithm -eq "SHA512") {
         $Digest = [String]::Format("SHA-512={0}", [Convert]::ToBase64String($bodyHash))
     }
-    
+
     $dateTime = Get-Date
     #get the date in UTC
     $currentDate = $dateTime.ToUniversalTime().ToString("r")
 
     foreach ($headerItem in $httpSigningConfiguration.HttpSigningHeader) {
-       
-        if ($headerItem -eq $HEADER_REQUEST_TARGET) { 
+
+        if ($headerItem -eq $HEADER_REQUEST_TARGET) {
             $requestTargetPath = [string]::Format("{0} {1}{2}", $Method.ToLower(), $UriBuilder.Path, $UriBuilder.Query)
             $HttpSignatureHeader.Add($HEADER_REQUEST_TARGET, $requestTargetPath)
         }
@@ -105,7 +105,7 @@ function Get-PSHttpSignedHeader {
     }
     #Concatinate headers value separated by new line
     $headerValuesString = $headerValuesList -join "`n"
-    
+
     #Gets the hash of the headers value
     $signatureHashString = Get-PSStringHash -String $headerValuesString -HashName $httpSigningConfiguration.HashAlgorithm
 
@@ -153,7 +153,7 @@ function Get-PSHttpSignedHeader {
     Gets the RSA signature
 
 .DESCRIPTION
-    Gets the RSA signature for the http signing 
+    Gets the RSA signature for the http signing.
 .PARAMETER PrivateKeyFilePath
     Specify the API key file path
 .PARAMETER DataToSign
@@ -202,17 +202,17 @@ function Get-PSRSASignature {
         else {
             $rsa_provider_path = Join-Path -Path $PSScriptRoot -ChildPath "PSRSAEncryptionProvider.cs"
             $rsa_provider_sourceCode = Get-Content -Path $rsa_provider_path -Raw
-            Add-Type -TypeDefinition $rsa_provider_sourceCode 
-    
+            Add-Type -TypeDefinition $rsa_provider_sourceCode
+
             [System.Security.Cryptography.RSA]$rsa = [RSAEncryption.RSAEncryptionProvider]::GetRSAProviderFromPemFile($PrivateKeyFilePath, $KeyPassPhrase)
-            
+
             if ($SigningAlgorithm -eq "RSASSA-PSS") {
                 throw "$SigningAlgorithm is not supported on $($PSVersionTable.PSVersion)"
             }
             else {
                 $signedBytes = $rsa.SignHash($DataToSign, $hashAlgo, [System.Security.Cryptography.RSASignaturePadding]::Pkcs1)
             }
-           
+
         }
 
         $signedString = [Convert]::ToBase64String($signedBytes)
@@ -228,7 +228,7 @@ function Get-PSRSASignature {
     Gets the ECDSA signature
 
 .DESCRIPTION
-    Gets the ECDSA signature for the http signing 
+    Gets the ECDSA signature for the http signing
 .PARAMETER PrivateKeyFilePath
     Specify the API key file path
 .PARAMETER DataToSign
@@ -273,9 +273,9 @@ function Get-PSECDSASignature {
         $ecdsa.ImportEncryptedPkcs8PrivateKey($KeyPassPhrase,$keyBytes,[ref]$bytCount)
     }
     else{
-    $ecdsa.ImportPkcs8PrivateKey($keyBytes,[ref]$bytCount)
+        $ecdsa.ImportPkcs8PrivateKey($keyBytes,[ref]$bytCount)
     }
-    
+
     if ($HashAlgorithmName -eq "sha512") {
         $ecdsa.HashAlgorithm = [System.Security.Cryptography.CngAlgorithm]::Sha512
     }
@@ -311,7 +311,7 @@ Function Get-PSStringHash {
         [Parameter(Mandatory = $true)]
         [ValidateSet("SHA1", "SHA256", "SHA512")]
         $HashName
-    ) 
+    )
     $hashAlogrithm = [System.Security.Cryptography.HashAlgorithm]::Create($HashName)
     $hashAlogrithm.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($String)) 
 }
@@ -411,5 +411,5 @@ function Get-PSKeyTypeFromFile {
     else {
         throw "Either the key is invalid or key is not supported"
     }
-    return $keyType   
+    return $keyType
 }
