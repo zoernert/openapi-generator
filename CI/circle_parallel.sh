@@ -64,6 +64,9 @@ else
   #sudo update-java-alternatives -s java-1.7.0-openjdk-amd64
   java -version
 
+  # setup env variables
+  export NODE_ENV=test
+
   # install dart2
   sudo apt-get update
   sudo apt-get install apt-transport-https
