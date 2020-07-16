@@ -4,7 +4,6 @@
 #
 
 NODE_INDEX=${CIRCLE_NODE_INDEX:-0}
-NODE_ENV=test
 
 set -e
 
