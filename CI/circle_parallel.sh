@@ -22,6 +22,10 @@ if [ "$NODE_INDEX" = "1" ]; then
 
   echo "show ivy2 cache"
   ls -l /home/circleci/.ivy2/cache
+  echo "show sbt cache"
+  ls -l /home/circleci/.sbt/
+  echo "show sbt boot cache"
+  ls -l /home/circleci/.sbt/boot
 
 elif [ "$NODE_INDEX" = "2" ]; then
   # run ensure-up-to-date sample script on SNAPSHOT version only
