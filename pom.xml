@@ -1186,6 +1186,7 @@
                 <!-- clients -->
                 <!--<module>samples/client/petstore/perl</module>
                 <module>samples/client/petstore/bash</module>-->
+                <module>samples/client/petstore/kotlin/</module>
                 <module>samples/client/petstore/ruby</module>
                 <module>samples/client/petstore/c</module>
                 <module>samples/client/petstore/cpp-qt5</module>
@@ -1328,7 +1329,6 @@
                 <module>samples/client/petstore/java/rest-assured-jackson</module>
                 <module>samples/client/petstore/java/microprofile-rest-client</module>
                 <module>samples/client/petstore/groovy</module>
-                <module>samples/client/petstore/kotlin/</module>
                 <!-- test non-java projects -->
                 <module>samples/client/petstore/go</module>
                 <module>samples/client/petstore/go-experimental</module>
