@@ -1328,6 +1328,7 @@
                 <module>samples/client/petstore/java/rest-assured-jackson</module>
                 <module>samples/client/petstore/java/microprofile-rest-client</module>
                 <module>samples/client/petstore/groovy</module>
+                <module>samples/client/petstore/kotlin/</module>
                 <!-- test non-java projects -->
                 <module>samples/client/petstore/go</module>
                 <module>samples/client/petstore/go-experimental</module>
@@ -1358,7 +1359,6 @@
                 <module>samples/client/petstore/erlang-client</module>
                 <module>samples/client/petstore/erlang-proper</module>
                 <module>samples/client/petstore/kotlin-multiplatform</module>
-                <!--<module>samples/client/petstore/kotlin/</module>-->
                 <module>samples/client/petstore/kotlin-jackson/</module>
                 <module>samples/client/petstore/kotlin-gson/</module>
                 <module>samples/client/petstore/kotlin-nonpublic/</module>
