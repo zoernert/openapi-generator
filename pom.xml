@@ -1356,21 +1356,17 @@
                 <module>samples/server/petstore/go-echo-server</module>
             </modules>
         </profile>
-        <!-- test with JDK9 in Shippable CI -->
+        <!-- test with CircleCI node 2 -->
         <profile>
-            <id>samples.shippable</id>
+            <id>samples.circleci2</id>
             <activation>
                 <property>
                     <name>env</name>
-                    <value>samples.shippable</value>
+                    <value>samples.circleci2</value>
                 </property>
             </activation>
             <modules>
                 <!-- clients -->
-                <module>samples/openapi3/client/elm</module>
-                <!--<module>samples/client/petstore/elixir</module>-->
-                <module>samples/client/petstore/erlang-client</module>
-                <module>samples/client/petstore/erlang-proper</module>
                 <module>samples/client/petstore/kotlin</module>
                 <module>samples/client/petstore/kotlin-gson</module>
                 <module>samples/client/petstore/kotlin-jackson</module>
@@ -1386,8 +1382,6 @@
                 <module>samples/client/petstore/kotlin-string</module>
                 <module>samples/client/petstore/kotlin-threetenbp</module>
                 <module>samples/client/petstore/kotlin-uppercase-enum</module>
-                <!-- servers -->
-                <!--<module>samples/server/petstore/erlang-server</module>-->
             </modules>
         </profile>
         <!-- test with JDK11 in drone.io -->

@@ -69,6 +69,17 @@ elif [ "$NODE_INDEX" = "2" ]; then
 
   # run integration tests
   mvn --no-snapshot-updates --quiet verify -Psamples.misc -Dorg.slf4j.simpleLogger.defaultLogLevel=error
+
+  #test samples defined in pom.xml
+  mvn --no-snapshot-updates --quiet verify -P samples.circleci2 -Dmaven.javadoc.skip=true
+  #test maven plugin
+  mvn --no-snapshot-updates --quiet clean compile -f modules/openapi-generator-maven-plugin/examples/java-client.xml -Dorg.slf4j.simpleLogger.defaultLogLevel=error
+  mvn --no-snapshot-updates --quiet clean compile -f modules/openapi-generator-maven-plugin/examples/multi-module/pom.xml -Dorg.slf4j.simpleLogger.defaultLogLevel=error
+  mvn --no-snapshot-updates --quiet clean compile -f modules/openapi-generator-maven-plugin/examples/kotlin.xml -Dorg.slf4j.simpleLogger.defaultLogLevel=error
+  mvn --no-snapshot-updates --quiet clean compile -f modules/openapi-generator-maven-plugin/examples/spring.xml -Dorg.slf4j.simpleLogger.defaultLogLevel=error
+  #test gradle plugin
+  (cd modules/openapi-generator-gradle-plugin/samples/local-spec && ./gradlew buildGoSdk)
+  (cd modules/openapi-generator-gradle-plugin/samples/local-spec && ./gradlew openApiGenerate)
 else
   echo "Running node $NODE_INDEX to test 'samples.circleci.others' defined in pom.xml ..."
   #sudo update-java-alternatives -s java-1.7.0-openjdk-amd64
