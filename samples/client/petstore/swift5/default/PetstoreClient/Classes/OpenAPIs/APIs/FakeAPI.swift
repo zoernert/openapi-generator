@@ -9,17 +9,16 @@ import Foundation
 
 open class FakeAPI {
     /**
-     creates an XmlItem
+     Health check endpoint
      
-     - parameter xmlItem: (body) XmlItem Body 
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func createXmlItem(xmlItem: XmlItem, apiResponseQueue: DispatchQueue = PetstoreClientAPI.apiResponseQueue, completion: @escaping ((_ data: Void?, _ error: Error?) -> Void)) {
-        createXmlItemWithRequestBuilder(xmlItem: xmlItem).execute(apiResponseQueue) { result -> Void in
+    open class func fakeHealthGet(apiResponseQueue: DispatchQueue = PetstoreClientAPI.apiResponseQueue, completion: @escaping ((_ data: HealthCheckResult?, _ error: Error?) -> Void)) {
+        fakeHealthGetWithRequestBuilder().execute(apiResponseQueue) { result -> Void in
             switch result {
-            case .success:
-                completion((), nil)
+            case let .success(response):
+                completion(response.body, nil)
             case let .failure(error):
                 completion(nil, error)
             }
@@ -27,16 +26,14 @@ open class FakeAPI {
     }
 
     /**
-     creates an XmlItem
-     - POST /fake/create_xml_item
-     - this route creates an XmlItem
-     - parameter xmlItem: (body) XmlItem Body 
-     - returns: RequestBuilder<Void> 
+     Health check endpoint
+     - GET /fake/health
+     - returns: RequestBuilder<HealthCheckResult> 
      */
-    open class func createXmlItemWithRequestBuilder(xmlItem: XmlItem) -> RequestBuilder<Void> {
-        let path = "/fake/create_xml_item"
+    open class func fakeHealthGetWithRequestBuilder() -> RequestBuilder<HealthCheckResult> {
+        let path = "/fake/health"
         let URLString = PetstoreClientAPI.basePath + path
-        let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: xmlItem)
+        let parameters: [String: Any]? = nil
 
         let urlComponents = URLComponents(string: URLString)
 
@@ -46,9 +43,9 @@ open class FakeAPI {
 
         let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
-        let requestBuilder: RequestBuilder<Void>.Type = PetstoreClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let requestBuilder: RequestBuilder<HealthCheckResult>.Type = PetstoreClientAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "POST", URLString: (urlComponents?.string ?? URLString), parameters: parameters, headers: headerParameters)
+        return requestBuilder.init(method: "GET", URLString: (urlComponents?.string ?? URLString), parameters: parameters, headers: headerParameters)
     }
 
     /**
@@ -94,12 +91,12 @@ open class FakeAPI {
 
     /**
 
-     - parameter body: (body) Input composite as post body (optional)
+     - parameter outerComposite: (body) Input composite as post body (optional)
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func fakeOuterCompositeSerialize(body: OuterComposite? = nil, apiResponseQueue: DispatchQueue = PetstoreClientAPI.apiResponseQueue, completion: @escaping ((_ data: OuterComposite?, _ error: Error?) -> Void)) {
-        fakeOuterCompositeSerializeWithRequestBuilder(body: body).execute(apiResponseQueue) { result -> Void in
+    open class func fakeOuterCompositeSerialize(outerComposite: OuterComposite? = nil, apiResponseQueue: DispatchQueue = PetstoreClientAPI.apiResponseQueue, completion: @escaping ((_ data: OuterComposite?, _ error: Error?) -> Void)) {
+        fakeOuterCompositeSerializeWithRequestBuilder(outerComposite: outerComposite).execute(apiResponseQueue) { result -> Void in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -112,13 +109,13 @@ open class FakeAPI {
     /**
      - POST /fake/outer/composite
      - Test serialization of object with outer number type
-     - parameter body: (body) Input composite as post body (optional)
+     - parameter outerComposite: (body) Input composite as post body (optional)
      - returns: RequestBuilder<OuterComposite> 
      */
-    open class func fakeOuterCompositeSerializeWithRequestBuilder(body: OuterComposite? = nil) -> RequestBuilder<OuterComposite> {
+    open class func fakeOuterCompositeSerializeWithRequestBuilder(outerComposite: OuterComposite? = nil) -> RequestBuilder<OuterComposite> {
         let path = "/fake/outer/composite"
         let URLString = PetstoreClientAPI.basePath + path
-        let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: body)
+        let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: outerComposite)
 
         let urlComponents = URLComponents(string: URLString)
 
@@ -217,12 +214,12 @@ open class FakeAPI {
 
     /**
 
-     - parameter body: (body)  
+     - parameter fileSchemaTestClass: (body)  
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func testBodyWithFileSchema(body: FileSchemaTestClass, apiResponseQueue: DispatchQueue = PetstoreClientAPI.apiResponseQueue, completion: @escaping ((_ data: Void?, _ error: Error?) -> Void)) {
-        testBodyWithFileSchemaWithRequestBuilder(body: body).execute(apiResponseQueue) { result -> Void in
+    open class func testBodyWithFileSchema(fileSchemaTestClass: FileSchemaTestClass, apiResponseQueue: DispatchQueue = PetstoreClientAPI.apiResponseQueue, completion: @escaping ((_ data: Void?, _ error: Error?) -> Void)) {
+        testBodyWithFileSchemaWithRequestBuilder(fileSchemaTestClass: fileSchemaTestClass).execute(apiResponseQueue) { result -> Void in
             switch result {
             case .success:
                 completion((), nil)
@@ -235,13 +232,13 @@ open class FakeAPI {
     /**
      - PUT /fake/body-with-file-schema
      - For this test, the body for this request much reference a schema named `File`.
-     - parameter body: (body)  
+     - parameter fileSchemaTestClass: (body)  
      - returns: RequestBuilder<Void> 
      */
-    open class func testBodyWithFileSchemaWithRequestBuilder(body: FileSchemaTestClass) -> RequestBuilder<Void> {
+    open class func testBodyWithFileSchemaWithRequestBuilder(fileSchemaTestClass: FileSchemaTestClass) -> RequestBuilder<Void> {
         let path = "/fake/body-with-file-schema"
         let URLString = PetstoreClientAPI.basePath + path
-        let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: body)
+        let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: fileSchemaTestClass)
 
         let urlComponents = URLComponents(string: URLString)
 
@@ -259,12 +256,12 @@ open class FakeAPI {
     /**
 
      - parameter query: (query)  
-     - parameter body: (body)  
+     - parameter user: (body)  
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func testBodyWithQueryParams(query: String, body: User, apiResponseQueue: DispatchQueue = PetstoreClientAPI.apiResponseQueue, completion: @escaping ((_ data: Void?, _ error: Error?) -> Void)) {
-        testBodyWithQueryParamsWithRequestBuilder(query: query, body: body).execute(apiResponseQueue) { result -> Void in
+    open class func testBodyWithQueryParams(query: String, user: User, apiResponseQueue: DispatchQueue = PetstoreClientAPI.apiResponseQueue, completion: @escaping ((_ data: Void?, _ error: Error?) -> Void)) {
+        testBodyWithQueryParamsWithRequestBuilder(query: query, user: user).execute(apiResponseQueue) { result -> Void in
             switch result {
             case .success:
                 completion((), nil)
@@ -277,13 +274,13 @@ open class FakeAPI {
     /**
      - PUT /fake/body-with-query-params
      - parameter query: (query)  
-     - parameter body: (body)  
+     - parameter user: (body)  
      - returns: RequestBuilder<Void> 
      */
-    open class func testBodyWithQueryParamsWithRequestBuilder(query: String, body: User) -> RequestBuilder<Void> {
+    open class func testBodyWithQueryParamsWithRequestBuilder(query: String, user: User) -> RequestBuilder<Void> {
         let path = "/fake/body-with-query-params"
         let URLString = PetstoreClientAPI.basePath + path
-        let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: body)
+        let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: user)
 
         var urlComponents = URLComponents(string: URLString)
         urlComponents?.queryItems = APIHelper.mapValuesToQueryItems([
@@ -304,12 +301,12 @@ open class FakeAPI {
     /**
      To test \"client\" model
      
-     - parameter body: (body) client model 
+     - parameter client: (body) client model 
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func testClientModel(body: Client, apiResponseQueue: DispatchQueue = PetstoreClientAPI.apiResponseQueue, completion: @escaping ((_ data: Client?, _ error: Error?) -> Void)) {
-        testClientModelWithRequestBuilder(body: body).execute(apiResponseQueue) { result -> Void in
+    open class func testClientModel(client: Client, apiResponseQueue: DispatchQueue = PetstoreClientAPI.apiResponseQueue, completion: @escaping ((_ data: Client?, _ error: Error?) -> Void)) {
+        testClientModelWithRequestBuilder(client: client).execute(apiResponseQueue) { result -> Void in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -323,13 +320,13 @@ open class FakeAPI {
      To test \"client\" model
      - PATCH /fake
      - To test \"client\" model
-     - parameter body: (body) client model 
+     - parameter client: (body) client model 
      - returns: RequestBuilder<Client> 
      */
-    open class func testClientModelWithRequestBuilder(body: Client) -> RequestBuilder<Client> {
+    open class func testClientModelWithRequestBuilder(client: Client) -> RequestBuilder<Client> {
         let path = "/fake"
         let URLString = PetstoreClientAPI.basePath + path
-        let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: body)
+        let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: client)
 
         let urlComponents = URLComponents(string: URLString)
 
@@ -345,7 +342,7 @@ open class FakeAPI {
     }
 
     /**
-     Fake endpoint for testing various parameters  假端點  偽のエンドポイント  가짜 엔드 포인트
+     Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
      
      - parameter number: (form) None 
      - parameter double: (form) None 
@@ -376,9 +373,9 @@ open class FakeAPI {
     }
 
     /**
-     Fake endpoint for testing various parameters  假端點  偽のエンドポイント  가짜 엔드 포인트
+     Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
      - POST /fake
-     - Fake endpoint for testing various parameters  假端點  偽のエンドポイント  가짜 엔드 포인트
+     - Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
      - BASIC:
        - type: http
        - name: http_basic_test
@@ -599,6 +596,9 @@ open class FakeAPI {
      Fake endpoint to test group parameters (optional)
      - DELETE /fake
      - Fake endpoint to test group parameters (optional)
+     - BASIC:
+       - type: http
+       - name: bearer_test
      - parameter requiredStringGroup: (query) Required String in group parameters 
      - parameter requiredBooleanGroup: (header) Required Boolean in group parameters 
      - parameter requiredInt64Group: (query) Required Integer in group parameters 
@@ -635,12 +635,12 @@ open class FakeAPI {
     /**
      test inline additionalProperties
      
-     - parameter param: (body) request body 
+     - parameter requestBody: (body) request body 
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func testInlineAdditionalProperties(param: [String: String], apiResponseQueue: DispatchQueue = PetstoreClientAPI.apiResponseQueue, completion: @escaping ((_ data: Void?, _ error: Error?) -> Void)) {
-        testInlineAdditionalPropertiesWithRequestBuilder(param: param).execute(apiResponseQueue) { result -> Void in
+    open class func testInlineAdditionalProperties(requestBody: [String: String], apiResponseQueue: DispatchQueue = PetstoreClientAPI.apiResponseQueue, completion: @escaping ((_ data: Void?, _ error: Error?) -> Void)) {
+        testInlineAdditionalPropertiesWithRequestBuilder(requestBody: requestBody).execute(apiResponseQueue) { result -> Void in
             switch result {
             case .success:
                 completion((), nil)
@@ -653,13 +653,13 @@ open class FakeAPI {
     /**
      test inline additionalProperties
      - POST /fake/inline-additionalProperties
-     - parameter param: (body) request body 
+     - parameter requestBody: (body) request body 
      - returns: RequestBuilder<Void> 
      */
-    open class func testInlineAdditionalPropertiesWithRequestBuilder(param: [String: String]) -> RequestBuilder<Void> {
+    open class func testInlineAdditionalPropertiesWithRequestBuilder(requestBody: [String: String]) -> RequestBuilder<Void> {
         let path = "/fake/inline-additionalProperties"
         let URLString = PetstoreClientAPI.basePath + path
-        let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: param)
+        let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: requestBody)
 
         let urlComponents = URLComponents(string: URLString)
 
@@ -776,6 +776,52 @@ open class FakeAPI {
         let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
         let requestBuilder: RequestBuilder<Void>.Type = PetstoreClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+
+        return requestBuilder.init(method: "PUT", URLString: (urlComponents?.string ?? URLString), parameters: parameters, headers: headerParameters)
+    }
+
+    /**
+
+     - parameter queryUnique: (query)  
+     - parameter headerUnique: (header)  
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
+     - parameter completion: completion handler to receive the data and the error objects
+     */
+    open class func testUniqueItemsHeaderAndQueryParameterCollectionFormat(queryUnique: Set<String>, headerUnique: Set<String>, apiResponseQueue: DispatchQueue = PetstoreClientAPI.apiResponseQueue, completion: @escaping ((_ data: Set<Pet>?, _ error: Error?) -> Void)) {
+        testUniqueItemsHeaderAndQueryParameterCollectionFormatWithRequestBuilder(queryUnique: queryUnique, headerUnique: headerUnique).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
+        }
+    }
+
+    /**
+     - PUT /fake/test-unique-paramters
+     - To test unique items in header and query parameters
+     - parameter queryUnique: (query)  
+     - parameter headerUnique: (header)  
+     - returns: RequestBuilder<Set<Pet>> 
+     */
+    open class func testUniqueItemsHeaderAndQueryParameterCollectionFormatWithRequestBuilder(queryUnique: Set<String>, headerUnique: Set<String>) -> RequestBuilder<Set<Pet>> {
+        let path = "/fake/test-unique-paramters"
+        let URLString = PetstoreClientAPI.basePath + path
+        let parameters: [String: Any]? = nil
+
+        var urlComponents = URLComponents(string: URLString)
+        urlComponents?.queryItems = APIHelper.mapValuesToQueryItems([
+            "queryUnique": queryUnique.encodeToJSON(),
+        ])
+
+        let nillableHeaders: [String: Any?] = [
+            "headerUnique": headerUnique.encodeToJSON(),
+        ]
+
+        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
+
+        let requestBuilder: RequestBuilder<Set<Pet>>.Type = PetstoreClientAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "PUT", URLString: (urlComponents?.string ?? URLString), parameters: parameters, headers: headerParameters)
     }

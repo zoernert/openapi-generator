@@ -147,12 +147,12 @@ open class StoreAPI {
     /**
      Place an order for a pet
      
-     - parameter body: (body) order placed for purchasing the pet 
+     - parameter order: (body) order placed for purchasing the pet 
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func placeOrder(body: Order, apiResponseQueue: DispatchQueue = PetstoreClientAPI.apiResponseQueue, completion: @escaping ((_ data: Order?, _ error: Error?) -> Void)) {
-        placeOrderWithRequestBuilder(body: body).execute(apiResponseQueue) { result -> Void in
+    open class func placeOrder(order: Order, apiResponseQueue: DispatchQueue = PetstoreClientAPI.apiResponseQueue, completion: @escaping ((_ data: Order?, _ error: Error?) -> Void)) {
+        placeOrderWithRequestBuilder(order: order).execute(apiResponseQueue) { result -> Void in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -165,13 +165,13 @@ open class StoreAPI {
     /**
      Place an order for a pet
      - POST /store/order
-     - parameter body: (body) order placed for purchasing the pet 
+     - parameter order: (body) order placed for purchasing the pet 
      - returns: RequestBuilder<Order> 
      */
-    open class func placeOrderWithRequestBuilder(body: Order) -> RequestBuilder<Order> {
+    open class func placeOrderWithRequestBuilder(order: Order) -> RequestBuilder<Order> {
         let path = "/store/order"
         let URLString = PetstoreClientAPI.basePath + path
-        let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: body)
+        let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: order)
 
         let urlComponents = URLComponents(string: URLString)
 

@@ -25,9 +25,12 @@ public struct FormatTest: Codable, Hashable {
     public var dateTime: Date?
     public var uuid: UUID?
     public var password: String
-    public var bigDecimal: Decimal?
+    /** A string that is a 10 digit number. Can have leading zeros. */
+    public var patternWithDigits: String?
+    /** A string starting with &#39;image_&#39; (case insensitive) and one to three digits following i.e. Image_01. */
+    public var patternWithDigitsAndDelimiter: String?
 
-    public init(integer: Int? = nil, int32: Int? = nil, int64: Int64? = nil, number: Double, float: Float? = nil, double: Double? = nil, string: String? = nil, byte: Data, binary: URL? = nil, date: Date, dateTime: Date? = nil, uuid: UUID? = nil, password: String, bigDecimal: Decimal? = nil) {
+    public init(integer: Int? = nil, int32: Int? = nil, int64: Int64? = nil, number: Double, float: Float? = nil, double: Double? = nil, string: String? = nil, byte: Data, binary: URL? = nil, date: Date, dateTime: Date? = nil, uuid: UUID? = nil, password: String, patternWithDigits: String? = nil, patternWithDigitsAndDelimiter: String? = nil) {
         self.integer = integer
         self.int32 = int32
         self.int64 = int64
@@ -41,7 +44,8 @@ public struct FormatTest: Codable, Hashable {
         self.dateTime = dateTime
         self.uuid = uuid
         self.password = password
-        self.bigDecimal = bigDecimal
+        self.patternWithDigits = patternWithDigits
+        self.patternWithDigitsAndDelimiter = patternWithDigitsAndDelimiter
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
@@ -58,7 +62,8 @@ public struct FormatTest: Codable, Hashable {
         case dateTime
         case uuid
         case password
-        case bigDecimal = "BigDecimal"
+        case patternWithDigits = "pattern_with_digits"
+        case patternWithDigitsAndDelimiter = "pattern_with_digits_and_delimiter"
     }
 
     // Encodable protocol methods
@@ -78,6 +83,7 @@ public struct FormatTest: Codable, Hashable {
         try container.encodeIfPresent(dateTime, forKey: .dateTime)
         try container.encodeIfPresent(uuid, forKey: .uuid)
         try container.encode(password, forKey: .password)
-        try container.encodeIfPresent(bigDecimal, forKey: .bigDecimal)
+        try container.encodeIfPresent(patternWithDigits, forKey: .patternWithDigits)
+        try container.encodeIfPresent(patternWithDigitsAndDelimiter, forKey: .patternWithDigitsAndDelimiter)
     }
 }

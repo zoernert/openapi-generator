@@ -26,7 +26,8 @@ All URIs are relative to *http://petstore.swagger.io:80/v2*
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
 *AnotherFakeAPI* | [**call123testSpecialTags**](docs/AnotherFakeAPI.md#call123testspecialtags) | **PATCH** /another-fake/dummy | To test special tags
-*FakeAPI* | [**createXmlItem**](docs/FakeAPI.md#createxmlitem) | **POST** /fake/create_xml_item | creates an XmlItem
+*DefaultAPI* | [**fooGet**](docs/DefaultAPI.md#fooget) | **GET** /foo | 
+*FakeAPI* | [**fakeHealthGet**](docs/FakeAPI.md#fakehealthget) | **GET** /fake/health | Health check endpoint
 *FakeAPI* | [**fakeOuterBooleanSerialize**](docs/FakeAPI.md#fakeouterbooleanserialize) | **POST** /fake/outer/boolean | 
 *FakeAPI* | [**fakeOuterCompositeSerialize**](docs/FakeAPI.md#fakeoutercompositeserialize) | **POST** /fake/outer/composite | 
 *FakeAPI* | [**fakeOuterNumberSerialize**](docs/FakeAPI.md#fakeouternumberserialize) | **POST** /fake/outer/number | 
@@ -34,12 +35,13 @@ Class | Method | HTTP request | Description
 *FakeAPI* | [**testBodyWithFileSchema**](docs/FakeAPI.md#testbodywithfileschema) | **PUT** /fake/body-with-file-schema | 
 *FakeAPI* | [**testBodyWithQueryParams**](docs/FakeAPI.md#testbodywithqueryparams) | **PUT** /fake/body-with-query-params | 
 *FakeAPI* | [**testClientModel**](docs/FakeAPI.md#testclientmodel) | **PATCH** /fake | To test \&quot;client\&quot; model
-*FakeAPI* | [**testEndpointParameters**](docs/FakeAPI.md#testendpointparameters) | **POST** /fake | Fake endpoint for testing various parameters  假端點  偽のエンドポイント  가짜 엔드 포인트
+*FakeAPI* | [**testEndpointParameters**](docs/FakeAPI.md#testendpointparameters) | **POST** /fake | Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
 *FakeAPI* | [**testEnumParameters**](docs/FakeAPI.md#testenumparameters) | **GET** /fake | To test enum parameters
 *FakeAPI* | [**testGroupParameters**](docs/FakeAPI.md#testgroupparameters) | **DELETE** /fake | Fake endpoint to test group parameters (optional)
 *FakeAPI* | [**testInlineAdditionalProperties**](docs/FakeAPI.md#testinlineadditionalproperties) | **POST** /fake/inline-additionalProperties | test inline additionalProperties
 *FakeAPI* | [**testJsonFormData**](docs/FakeAPI.md#testjsonformdata) | **GET** /fake/jsonFormData | test json serialization of form data
 *FakeAPI* | [**testQueryParameterCollectionFormat**](docs/FakeAPI.md#testqueryparametercollectionformat) | **PUT** /fake/test-query-paramters | 
+*FakeAPI* | [**testUniqueItemsHeaderAndQueryParameterCollectionFormat**](docs/FakeAPI.md#testuniqueitemsheaderandqueryparametercollectionformat) | **PUT** /fake/test-unique-paramters | 
 *FakeClassnameTags123API* | [**testClassname**](docs/FakeClassnameTags123API.md#testclassname) | **PATCH** /fake_classname_test | To test class name in snake case
 *PetAPI* | [**addPet**](docs/PetAPI.md#addpet) | **POST** /pet | Add a new pet to the store
 *PetAPI* | [**deletePet**](docs/PetAPI.md#deletepet) | **DELETE** /pet/{petId} | Deletes a pet
@@ -66,22 +68,18 @@ Class | Method | HTTP request | Description
 
 ## Documentation For Models
 
- - [AdditionalPropertiesAnyType](docs/AdditionalPropertiesAnyType.md)
- - [AdditionalPropertiesArray](docs/AdditionalPropertiesArray.md)
- - [AdditionalPropertiesBoolean](docs/AdditionalPropertiesBoolean.md)
  - [AdditionalPropertiesClass](docs/AdditionalPropertiesClass.md)
- - [AdditionalPropertiesInteger](docs/AdditionalPropertiesInteger.md)
- - [AdditionalPropertiesNumber](docs/AdditionalPropertiesNumber.md)
- - [AdditionalPropertiesObject](docs/AdditionalPropertiesObject.md)
- - [AdditionalPropertiesString](docs/AdditionalPropertiesString.md)
+ - [Address](docs/Address.md)
  - [Animal](docs/Animal.md)
  - [AnimalFarm](docs/AnimalFarm.md)
  - [ApiResponse](docs/ApiResponse.md)
+ - [Apple](docs/Apple.md)
+ - [AppleReq](docs/AppleReq.md)
  - [ArrayOfArrayOfNumberOnly](docs/ArrayOfArrayOfNumberOnly.md)
  - [ArrayOfNumberOnly](docs/ArrayOfNumberOnly.md)
  - [ArrayTest](docs/ArrayTest.md)
- - [BigCat](docs/BigCat.md)
- - [BigCatAllOf](docs/BigCatAllOf.md)
+ - [Banana](docs/Banana.md)
+ - [BananaReq](docs/BananaReq.md)
  - [Capitalization](docs/Capitalization.md)
  - [Cat](docs/Cat.md)
  - [CatAllOf](docs/CatAllOf.md)
@@ -95,27 +93,37 @@ Class | Method | HTTP request | Description
  - [EnumTest](docs/EnumTest.md)
  - [File](docs/File.md)
  - [FileSchemaTestClass](docs/FileSchemaTestClass.md)
+ - [Foo](docs/Foo.md)
  - [FormatTest](docs/FormatTest.md)
+ - [Fruit](docs/Fruit.md)
+ - [FruitReq](docs/FruitReq.md)
+ - [GmFruit](docs/GmFruit.md)
  - [HasOnlyReadOnly](docs/HasOnlyReadOnly.md)
+ - [HealthCheckResult](docs/HealthCheckResult.md)
+ - [InlineResponseDefault](docs/InlineResponseDefault.md)
  - [List](docs/List.md)
+ - [Mammal](docs/Mammal.md)
  - [MapTest](docs/MapTest.md)
  - [MixedPropertiesAndAdditionalPropertiesClass](docs/MixedPropertiesAndAdditionalPropertiesClass.md)
  - [Model200Response](docs/Model200Response.md)
  - [Name](docs/Name.md)
+ - [NullableClass](docs/NullableClass.md)
  - [NumberOnly](docs/NumberOnly.md)
  - [Order](docs/Order.md)
  - [OuterComposite](docs/OuterComposite.md)
  - [OuterEnum](docs/OuterEnum.md)
+ - [OuterEnumDefaultValue](docs/OuterEnumDefaultValue.md)
+ - [OuterEnumInteger](docs/OuterEnumInteger.md)
+ - [OuterEnumIntegerDefaultValue](docs/OuterEnumIntegerDefaultValue.md)
  - [Pet](docs/Pet.md)
  - [ReadOnlyFirst](docs/ReadOnlyFirst.md)
  - [Return](docs/Return.md)
  - [SpecialModelName](docs/SpecialModelName.md)
  - [StringBooleanMap](docs/StringBooleanMap.md)
  - [Tag](docs/Tag.md)
- - [TypeHolderDefault](docs/TypeHolderDefault.md)
- - [TypeHolderExample](docs/TypeHolderExample.md)
  - [User](docs/User.md)
- - [XmlItem](docs/XmlItem.md)
+ - [Whale](docs/Whale.md)
+ - [Zebra](docs/Zebra.md)
 
 
 ## Documentation For Authorization
@@ -133,7 +141,15 @@ Class | Method | HTTP request | Description
 - **API key parameter name**: api_key_query
 - **Location**: URL query string
 
+## bearer_test
+
+- **Type**: HTTP basic authentication
+
 ## http_basic_test
+
+- **Type**: HTTP basic authentication
+
+## http_signature_test
 
 - **Type**: HTTP basic authentication
 

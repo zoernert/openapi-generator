@@ -11,12 +11,12 @@ open class UserAPI {
     /**
      Create user
      
-     - parameter body: (body) Created user object 
+     - parameter user: (body) Created user object 
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func createUser(body: User, apiResponseQueue: DispatchQueue = PetstoreClientAPI.apiResponseQueue, completion: @escaping ((_ data: Void?, _ error: Error?) -> Void)) {
-        createUserWithRequestBuilder(body: body).execute(apiResponseQueue) { result -> Void in
+    open class func createUser(user: User, apiResponseQueue: DispatchQueue = PetstoreClientAPI.apiResponseQueue, completion: @escaping ((_ data: Void?, _ error: Error?) -> Void)) {
+        createUserWithRequestBuilder(user: user).execute(apiResponseQueue) { result -> Void in
             switch result {
             case .success:
                 completion((), nil)
@@ -30,13 +30,13 @@ open class UserAPI {
      Create user
      - POST /user
      - This can only be done by the logged in user.
-     - parameter body: (body) Created user object 
+     - parameter user: (body) Created user object 
      - returns: RequestBuilder<Void> 
      */
-    open class func createUserWithRequestBuilder(body: User) -> RequestBuilder<Void> {
+    open class func createUserWithRequestBuilder(user: User) -> RequestBuilder<Void> {
         let path = "/user"
         let URLString = PetstoreClientAPI.basePath + path
-        let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: body)
+        let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: user)
 
         let urlComponents = URLComponents(string: URLString)
 
@@ -54,12 +54,12 @@ open class UserAPI {
     /**
      Creates list of users with given input array
      
-     - parameter body: (body) List of user object 
+     - parameter user: (body) List of user object 
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func createUsersWithArrayInput(body: [User], apiResponseQueue: DispatchQueue = PetstoreClientAPI.apiResponseQueue, completion: @escaping ((_ data: Void?, _ error: Error?) -> Void)) {
-        createUsersWithArrayInputWithRequestBuilder(body: body).execute(apiResponseQueue) { result -> Void in
+    open class func createUsersWithArrayInput(user: [User], apiResponseQueue: DispatchQueue = PetstoreClientAPI.apiResponseQueue, completion: @escaping ((_ data: Void?, _ error: Error?) -> Void)) {
+        createUsersWithArrayInputWithRequestBuilder(user: user).execute(apiResponseQueue) { result -> Void in
             switch result {
             case .success:
                 completion((), nil)
@@ -72,13 +72,13 @@ open class UserAPI {
     /**
      Creates list of users with given input array
      - POST /user/createWithArray
-     - parameter body: (body) List of user object 
+     - parameter user: (body) List of user object 
      - returns: RequestBuilder<Void> 
      */
-    open class func createUsersWithArrayInputWithRequestBuilder(body: [User]) -> RequestBuilder<Void> {
+    open class func createUsersWithArrayInputWithRequestBuilder(user: [User]) -> RequestBuilder<Void> {
         let path = "/user/createWithArray"
         let URLString = PetstoreClientAPI.basePath + path
-        let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: body)
+        let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: user)
 
         let urlComponents = URLComponents(string: URLString)
 
@@ -96,12 +96,12 @@ open class UserAPI {
     /**
      Creates list of users with given input array
      
-     - parameter body: (body) List of user object 
+     - parameter user: (body) List of user object 
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func createUsersWithListInput(body: [User], apiResponseQueue: DispatchQueue = PetstoreClientAPI.apiResponseQueue, completion: @escaping ((_ data: Void?, _ error: Error?) -> Void)) {
-        createUsersWithListInputWithRequestBuilder(body: body).execute(apiResponseQueue) { result -> Void in
+    open class func createUsersWithListInput(user: [User], apiResponseQueue: DispatchQueue = PetstoreClientAPI.apiResponseQueue, completion: @escaping ((_ data: Void?, _ error: Error?) -> Void)) {
+        createUsersWithListInputWithRequestBuilder(user: user).execute(apiResponseQueue) { result -> Void in
             switch result {
             case .success:
                 completion((), nil)
@@ -114,13 +114,13 @@ open class UserAPI {
     /**
      Creates list of users with given input array
      - POST /user/createWithList
-     - parameter body: (body) List of user object 
+     - parameter user: (body) List of user object 
      - returns: RequestBuilder<Void> 
      */
-    open class func createUsersWithListInputWithRequestBuilder(body: [User]) -> RequestBuilder<Void> {
+    open class func createUsersWithListInputWithRequestBuilder(user: [User]) -> RequestBuilder<Void> {
         let path = "/user/createWithList"
         let URLString = PetstoreClientAPI.basePath + path
-        let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: body)
+        let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: user)
 
         let urlComponents = URLComponents(string: URLString)
 
@@ -319,12 +319,12 @@ open class UserAPI {
      Updated user
      
      - parameter username: (path) name that need to be deleted 
-     - parameter body: (body) Updated user object 
+     - parameter user: (body) Updated user object 
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func updateUser(username: String, body: User, apiResponseQueue: DispatchQueue = PetstoreClientAPI.apiResponseQueue, completion: @escaping ((_ data: Void?, _ error: Error?) -> Void)) {
-        updateUserWithRequestBuilder(username: username, body: body).execute(apiResponseQueue) { result -> Void in
+    open class func updateUser(username: String, user: User, apiResponseQueue: DispatchQueue = PetstoreClientAPI.apiResponseQueue, completion: @escaping ((_ data: Void?, _ error: Error?) -> Void)) {
+        updateUserWithRequestBuilder(username: username, user: user).execute(apiResponseQueue) { result -> Void in
             switch result {
             case .success:
                 completion((), nil)
@@ -339,16 +339,16 @@ open class UserAPI {
      - PUT /user/{username}
      - This can only be done by the logged in user.
      - parameter username: (path) name that need to be deleted 
-     - parameter body: (body) Updated user object 
+     - parameter user: (body) Updated user object 
      - returns: RequestBuilder<Void> 
      */
-    open class func updateUserWithRequestBuilder(username: String, body: User) -> RequestBuilder<Void> {
+    open class func updateUserWithRequestBuilder(username: String, user: User) -> RequestBuilder<Void> {
         var path = "/user/{username}"
         let usernamePreEscape = "\(APIHelper.mapValueToPathItem(username))"
         let usernamePostEscape = usernamePreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         path = path.replacingOccurrences(of: "{username}", with: usernamePostEscape, options: .literal, range: nil)
         let URLString = PetstoreClientAPI.basePath + path
-        let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: body)
+        let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: user)
 
         let urlComponents = URLComponents(string: URLString)
 

@@ -17,7 +17,7 @@ Method | HTTP request | Description
 
 # **addPet**
 ```swift
-    open class func addPet(body: Pet, completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
+    open class func addPet(pet: Pet, completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
 ```
 
 Add a new pet to the store
@@ -27,10 +27,10 @@ Add a new pet to the store
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import PetstoreClient
 
-let body = Pet(id: 123, category: Category(id: 123, name: "name_example"), name: "name_example", photoUrls: ["photoUrls_example"], tags: [Tag(id: 123, name: "name_example")], status: "status_example") // Pet | Pet object that needs to be added to the store
+let pet = Pet(id: 123, category: Category(id: 123, name: "name_example"), name: "name_example", photoUrls: ["photoUrls_example"], tags: [Tag(id: 123, name: "name_example")], status: "status_example") // Pet | Pet object that needs to be added to the store
 
 // Add a new pet to the store
-PetAPI.addPet(body: body) { (response, error) in
+PetAPI.addPet(pet: pet) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -46,7 +46,7 @@ PetAPI.addPet(body: body) { (response, error) in
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**Pet**](Pet.md) | Pet object that needs to be added to the store | 
+ **pet** | [**Pet**](Pet.md) | Pet object that needs to be added to the store | 
 
 ### Return type
 
@@ -54,7 +54,7 @@ Void (empty response body)
 
 ### Authorization
 
-[petstore_auth](../README.md#petstore_auth)
+[http_signature_test](../README.md#http_signature_test), [petstore_auth](../README.md#petstore_auth)
 
 ### HTTP request headers
 
@@ -154,7 +154,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[petstore_auth](../README.md#petstore_auth)
+[http_signature_test](../README.md#http_signature_test), [petstore_auth](../README.md#petstore_auth)
 
 ### HTTP request headers
 
@@ -165,7 +165,7 @@ Name | Type | Description  | Notes
 
 # **findPetsByTags**
 ```swift
-    open class func findPetsByTags(tags: Set<String>, completion: @escaping (_ data: Set<Pet>?, _ error: Error?) -> Void)
+    open class func findPetsByTags(tags: [String], completion: @escaping (_ data: [Pet]?, _ error: Error?) -> Void)
 ```
 
 Finds Pets by tags
@@ -177,7 +177,7 @@ Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import PetstoreClient
 
-let tags = ["inner_example"] // Set<String> | Tags to filter by
+let tags = ["inner_example"] // [String] | Tags to filter by
 
 // Finds Pets by tags
 PetAPI.findPetsByTags(tags: tags) { (response, error) in
@@ -196,15 +196,15 @@ PetAPI.findPetsByTags(tags: tags) { (response, error) in
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **tags** | [**Set&lt;String&gt;**](String.md) | Tags to filter by | 
+ **tags** | [**[String]**](String.md) | Tags to filter by | 
 
 ### Return type
 
-[**Set<Pet>**](Pet.md)
+[**[Pet]**](Pet.md)
 
 ### Authorization
 
-[petstore_auth](../README.md#petstore_auth)
+[http_signature_test](../README.md#http_signature_test), [petstore_auth](../README.md#petstore_auth)
 
 ### HTTP request headers
 
@@ -265,7 +265,7 @@ Name | Type | Description  | Notes
 
 # **updatePet**
 ```swift
-    open class func updatePet(body: Pet, completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
+    open class func updatePet(pet: Pet, completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
 ```
 
 Update an existing pet
@@ -275,10 +275,10 @@ Update an existing pet
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import PetstoreClient
 
-let body = Pet(id: 123, category: Category(id: 123, name: "name_example"), name: "name_example", photoUrls: ["photoUrls_example"], tags: [Tag(id: 123, name: "name_example")], status: "status_example") // Pet | Pet object that needs to be added to the store
+let pet = Pet(id: 123, category: Category(id: 123, name: "name_example"), name: "name_example", photoUrls: ["photoUrls_example"], tags: [Tag(id: 123, name: "name_example")], status: "status_example") // Pet | Pet object that needs to be added to the store
 
 // Update an existing pet
-PetAPI.updatePet(body: body) { (response, error) in
+PetAPI.updatePet(pet: pet) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -294,7 +294,7 @@ PetAPI.updatePet(body: body) { (response, error) in
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**Pet**](Pet.md) | Pet object that needs to be added to the store | 
+ **pet** | [**Pet**](Pet.md) | Pet object that needs to be added to the store | 
 
 ### Return type
 
@@ -302,7 +302,7 @@ Void (empty response body)
 
 ### Authorization
 
-[petstore_auth](../README.md#petstore_auth)
+[http_signature_test](../README.md#http_signature_test), [petstore_auth](../README.md#petstore_auth)
 
 ### HTTP request headers
 

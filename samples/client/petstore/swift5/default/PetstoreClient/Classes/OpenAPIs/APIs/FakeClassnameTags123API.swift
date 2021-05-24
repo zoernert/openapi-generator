@@ -11,12 +11,12 @@ open class FakeClassnameTags123API {
     /**
      To test class name in snake case
      
-     - parameter body: (body) client model 
+     - parameter client: (body) client model 
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func testClassname(body: Client, apiResponseQueue: DispatchQueue = PetstoreClientAPI.apiResponseQueue, completion: @escaping ((_ data: Client?, _ error: Error?) -> Void)) {
-        testClassnameWithRequestBuilder(body: body).execute(apiResponseQueue) { result -> Void in
+    open class func testClassname(client: Client, apiResponseQueue: DispatchQueue = PetstoreClientAPI.apiResponseQueue, completion: @escaping ((_ data: Client?, _ error: Error?) -> Void)) {
+        testClassnameWithRequestBuilder(client: client).execute(apiResponseQueue) { result -> Void in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -33,13 +33,13 @@ open class FakeClassnameTags123API {
      - API Key:
        - type: apiKey api_key_query (QUERY)
        - name: api_key_query
-     - parameter body: (body) client model 
+     - parameter client: (body) client model 
      - returns: RequestBuilder<Client> 
      */
-    open class func testClassnameWithRequestBuilder(body: Client) -> RequestBuilder<Client> {
+    open class func testClassnameWithRequestBuilder(client: Client) -> RequestBuilder<Client> {
         let path = "/fake_classname_test"
         let URLString = PetstoreClientAPI.basePath + path
-        let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: body)
+        let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: client)
 
         let urlComponents = URLComponents(string: URLString)
 

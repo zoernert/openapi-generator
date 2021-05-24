@@ -9,7 +9,7 @@ Method | HTTP request | Description
 
 # **testClassname**
 ```swift
-    open class func testClassname(body: Client, completion: @escaping (_ data: Client?, _ error: Error?) -> Void)
+    open class func testClassname(client: Client, completion: @escaping (_ data: Client?, _ error: Error?) -> Void)
 ```
 
 To test class name in snake case
@@ -21,10 +21,10 @@ To test class name in snake case
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import PetstoreClient
 
-let body = Client(client: "client_example") // Client | client model
+let client = Client(client: "client_example") // Client | client model
 
 // To test class name in snake case
-FakeClassnameTags123API.testClassname(body: body) { (response, error) in
+FakeClassnameTags123API.testClassname(client: client) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -40,7 +40,7 @@ FakeClassnameTags123API.testClassname(body: body) { (response, error) in
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**Client**](Client.md) | client model | 
+ **client** | [**Client**](Client.md) | client model | 
 
 ### Return type
 

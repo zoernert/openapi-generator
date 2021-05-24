@@ -158,7 +158,7 @@ No authorization required
 
 # **placeOrder**
 ```swift
-    open class func placeOrder(body: Order, completion: @escaping (_ data: Order?, _ error: Error?) -> Void)
+    open class func placeOrder(order: Order, completion: @escaping (_ data: Order?, _ error: Error?) -> Void)
 ```
 
 Place an order for a pet
@@ -168,10 +168,10 @@ Place an order for a pet
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import PetstoreClient
 
-let body = Order(id: 123, petId: 123, quantity: 123, shipDate: Date(), status: "status_example", complete: false) // Order | order placed for purchasing the pet
+let order = Order(id: 123, petId: 123, quantity: 123, shipDate: Date(), status: "status_example", complete: false) // Order | order placed for purchasing the pet
 
 // Place an order for a pet
-StoreAPI.placeOrder(body: body) { (response, error) in
+StoreAPI.placeOrder(order: order) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -187,7 +187,7 @@ StoreAPI.placeOrder(body: body) { (response, error) in
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**Order**](Order.md) | order placed for purchasing the pet | 
+ **order** | [**Order**](Order.md) | order placed for purchasing the pet | 
 
 ### Return type
 
@@ -199,7 +199,7 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/xml, application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

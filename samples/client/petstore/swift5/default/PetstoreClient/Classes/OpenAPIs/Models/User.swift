@@ -21,8 +21,16 @@ public struct User: Codable, Hashable {
     public var phone: String?
     /** User Status */
     public var userStatus: Int?
+    /** test code generation for objects Value must be a map of strings to values. It cannot be the &#39;null&#39; value. */
+    public var arbitraryObject: AnyCodable?
+    /** test code generation for nullable objects. Value must be a map of strings to values or the &#39;null&#39; value. */
+    public var arbitraryNullableObject: AnyCodable?
+    /** test code generation for any type Value can be any type - string, number, boolean, array or object. */
+    public var arbitraryTypeValue: AnyCodable?
+    /** test code generation for any type Value can be any type - string, number, boolean, array, object or the &#39;null&#39; value. */
+    public var arbitraryNullableTypeValue: AnyCodable?
 
-    public init(id: Int64? = nil, username: String? = nil, firstName: String? = nil, lastName: String? = nil, email: String? = nil, password: String? = nil, phone: String? = nil, userStatus: Int? = nil) {
+    public init(id: Int64? = nil, username: String? = nil, firstName: String? = nil, lastName: String? = nil, email: String? = nil, password: String? = nil, phone: String? = nil, userStatus: Int? = nil, arbitraryObject: AnyCodable? = nil, arbitraryNullableObject: AnyCodable? = nil, arbitraryTypeValue: AnyCodable? = nil, arbitraryNullableTypeValue: AnyCodable? = nil) {
         self.id = id
         self.username = username
         self.firstName = firstName
@@ -31,6 +39,10 @@ public struct User: Codable, Hashable {
         self.password = password
         self.phone = phone
         self.userStatus = userStatus
+        self.arbitraryObject = arbitraryObject
+        self.arbitraryNullableObject = arbitraryNullableObject
+        self.arbitraryTypeValue = arbitraryTypeValue
+        self.arbitraryNullableTypeValue = arbitraryNullableTypeValue
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
@@ -42,6 +54,10 @@ public struct User: Codable, Hashable {
         case password
         case phone
         case userStatus
+        case arbitraryObject
+        case arbitraryNullableObject
+        case arbitraryTypeValue
+        case arbitraryNullableTypeValue
     }
 
     // Encodable protocol methods
@@ -56,5 +72,9 @@ public struct User: Codable, Hashable {
         try container.encodeIfPresent(password, forKey: .password)
         try container.encodeIfPresent(phone, forKey: .phone)
         try container.encodeIfPresent(userStatus, forKey: .userStatus)
+        try container.encodeIfPresent(arbitraryObject, forKey: .arbitraryObject)
+        try container.encodeIfPresent(arbitraryNullableObject, forKey: .arbitraryNullableObject)
+        try container.encodeIfPresent(arbitraryTypeValue, forKey: .arbitraryTypeValue)
+        try container.encodeIfPresent(arbitraryNullableTypeValue, forKey: .arbitraryNullableTypeValue)
     }
 }

@@ -16,7 +16,7 @@ Method | HTTP request | Description
 
 # **createUser**
 ```swift
-    open class func createUser(body: User, completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
+    open class func createUser(user: User, completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
 ```
 
 Create user
@@ -28,10 +28,10 @@ This can only be done by the logged in user.
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import PetstoreClient
 
-let body = User(id: 123, username: "username_example", firstName: "firstName_example", lastName: "lastName_example", email: "email_example", password: "password_example", phone: "phone_example", userStatus: 123) // User | Created user object
+let user = User(id: 123, username: "username_example", firstName: "firstName_example", lastName: "lastName_example", email: "email_example", password: "password_example", phone: "phone_example", userStatus: 123, arbitraryObject: "TODO", arbitraryNullableObject: "TODO", arbitraryTypeValue: "TODO", arbitraryNullableTypeValue: "TODO") // User | Created user object
 
 // Create user
-UserAPI.createUser(body: body) { (response, error) in
+UserAPI.createUser(user: user) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -47,7 +47,7 @@ UserAPI.createUser(body: body) { (response, error) in
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**User**](User.md) | Created user object | 
+ **user** | [**User**](User.md) | Created user object | 
 
 ### Return type
 
@@ -59,14 +59,14 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **createUsersWithArrayInput**
 ```swift
-    open class func createUsersWithArrayInput(body: [User], completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
+    open class func createUsersWithArrayInput(user: [User], completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
 ```
 
 Creates list of users with given input array
@@ -76,10 +76,10 @@ Creates list of users with given input array
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import PetstoreClient
 
-let body = [User(id: 123, username: "username_example", firstName: "firstName_example", lastName: "lastName_example", email: "email_example", password: "password_example", phone: "phone_example", userStatus: 123)] // [User] | List of user object
+let user = [User(id: 123, username: "username_example", firstName: "firstName_example", lastName: "lastName_example", email: "email_example", password: "password_example", phone: "phone_example", userStatus: 123, arbitraryObject: "TODO", arbitraryNullableObject: "TODO", arbitraryTypeValue: "TODO", arbitraryNullableTypeValue: "TODO")] // [User] | List of user object
 
 // Creates list of users with given input array
-UserAPI.createUsersWithArrayInput(body: body) { (response, error) in
+UserAPI.createUsersWithArrayInput(user: user) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -95,7 +95,7 @@ UserAPI.createUsersWithArrayInput(body: body) { (response, error) in
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**[User]**](User.md) | List of user object | 
+ **user** | [**[User]**](User.md) | List of user object | 
 
 ### Return type
 
@@ -107,14 +107,14 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **createUsersWithListInput**
 ```swift
-    open class func createUsersWithListInput(body: [User], completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
+    open class func createUsersWithListInput(user: [User], completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
 ```
 
 Creates list of users with given input array
@@ -124,10 +124,10 @@ Creates list of users with given input array
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import PetstoreClient
 
-let body = [User(id: 123, username: "username_example", firstName: "firstName_example", lastName: "lastName_example", email: "email_example", password: "password_example", phone: "phone_example", userStatus: 123)] // [User] | List of user object
+let user = [User(id: 123, username: "username_example", firstName: "firstName_example", lastName: "lastName_example", email: "email_example", password: "password_example", phone: "phone_example", userStatus: 123, arbitraryObject: "TODO", arbitraryNullableObject: "TODO", arbitraryTypeValue: "TODO", arbitraryNullableTypeValue: "TODO")] // [User] | List of user object
 
 // Creates list of users with given input array
-UserAPI.createUsersWithListInput(body: body) { (response, error) in
+UserAPI.createUsersWithListInput(user: user) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -143,7 +143,7 @@ UserAPI.createUsersWithListInput(body: body) { (response, error) in
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**[User]**](User.md) | List of user object | 
+ **user** | [**[User]**](User.md) | List of user object | 
 
 ### Return type
 
@@ -155,7 +155,7 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -354,7 +354,7 @@ No authorization required
 
 # **updateUser**
 ```swift
-    open class func updateUser(username: String, body: User, completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
+    open class func updateUser(username: String, user: User, completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
 ```
 
 Updated user
@@ -367,10 +367,10 @@ This can only be done by the logged in user.
 import PetstoreClient
 
 let username = "username_example" // String | name that need to be deleted
-let body = User(id: 123, username: "username_example", firstName: "firstName_example", lastName: "lastName_example", email: "email_example", password: "password_example", phone: "phone_example", userStatus: 123) // User | Updated user object
+let user = User(id: 123, username: "username_example", firstName: "firstName_example", lastName: "lastName_example", email: "email_example", password: "password_example", phone: "phone_example", userStatus: 123, arbitraryObject: "TODO", arbitraryNullableObject: "TODO", arbitraryTypeValue: "TODO", arbitraryNullableTypeValue: "TODO") // User | Updated user object
 
 // Updated user
-UserAPI.updateUser(username: username, body: body) { (response, error) in
+UserAPI.updateUser(username: username, user: user) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -387,7 +387,7 @@ UserAPI.updateUser(username: username, body: body) { (response, error) in
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **username** | **String** | name that need to be deleted | 
- **body** | [**User**](User.md) | Updated user object | 
+ **user** | [**User**](User.md) | Updated user object | 
 
 ### Return type
 
@@ -399,7 +399,7 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

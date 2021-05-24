@@ -35,13 +35,19 @@ public struct EnumTest: Codable, Hashable {
     public var enumInteger: EnumInteger?
     public var enumNumber: EnumNumber?
     public var outerEnum: OuterEnum?
+    public var outerEnumInteger: OuterEnumInteger?
+    public var outerEnumDefaultValue: OuterEnumDefaultValue?
+    public var outerEnumIntegerDefaultValue: OuterEnumIntegerDefaultValue?
 
-    public init(enumString: EnumString? = nil, enumStringRequired: EnumStringRequired, enumInteger: EnumInteger? = nil, enumNumber: EnumNumber? = nil, outerEnum: OuterEnum? = nil) {
+    public init(enumString: EnumString? = nil, enumStringRequired: EnumStringRequired, enumInteger: EnumInteger? = nil, enumNumber: EnumNumber? = nil, outerEnum: OuterEnum? = nil, outerEnumInteger: OuterEnumInteger? = nil, outerEnumDefaultValue: OuterEnumDefaultValue? = nil, outerEnumIntegerDefaultValue: OuterEnumIntegerDefaultValue? = nil) {
         self.enumString = enumString
         self.enumStringRequired = enumStringRequired
         self.enumInteger = enumInteger
         self.enumNumber = enumNumber
         self.outerEnum = outerEnum
+        self.outerEnumInteger = outerEnumInteger
+        self.outerEnumDefaultValue = outerEnumDefaultValue
+        self.outerEnumIntegerDefaultValue = outerEnumIntegerDefaultValue
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
@@ -50,6 +56,9 @@ public struct EnumTest: Codable, Hashable {
         case enumInteger = "enum_integer"
         case enumNumber = "enum_number"
         case outerEnum
+        case outerEnumInteger
+        case outerEnumDefaultValue
+        case outerEnumIntegerDefaultValue
     }
 
     // Encodable protocol methods
@@ -61,5 +70,8 @@ public struct EnumTest: Codable, Hashable {
         try container.encodeIfPresent(enumInteger, forKey: .enumInteger)
         try container.encodeIfPresent(enumNumber, forKey: .enumNumber)
         try container.encodeIfPresent(outerEnum, forKey: .outerEnum)
+        try container.encodeIfPresent(outerEnumInteger, forKey: .outerEnumInteger)
+        try container.encodeIfPresent(outerEnumDefaultValue, forKey: .outerEnumDefaultValue)
+        try container.encodeIfPresent(outerEnumIntegerDefaultValue, forKey: .outerEnumIntegerDefaultValue)
     }
 }

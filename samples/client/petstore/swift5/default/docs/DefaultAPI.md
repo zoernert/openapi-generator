@@ -1,30 +1,26 @@
-# AnotherFakeAPI
+# DefaultAPI
 
 All URIs are relative to *http://petstore.swagger.io:80/v2*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**call123testSpecialTags**](AnotherFakeAPI.md#call123testspecialtags) | **PATCH** /another-fake/dummy | To test special tags
+[**fooGet**](DefaultAPI.md#fooget) | **GET** /foo | 
 
 
-# **call123testSpecialTags**
+# **fooGet**
 ```swift
-    open class func call123testSpecialTags(client: Client, completion: @escaping (_ data: Client?, _ error: Error?) -> Void)
+    open class func fooGet(completion: @escaping (_ data: InlineResponseDefault?, _ error: Error?) -> Void)
 ```
 
-To test special tags
 
-To test special tags and operation ID starting with number
 
 ### Example 
 ```swift
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import PetstoreClient
 
-let client = Client(client: "client_example") // Client | client model
 
-// To test special tags
-AnotherFakeAPI.call123testSpecialTags(client: client) { (response, error) in
+DefaultAPI.fooGet() { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -37,14 +33,11 @@ AnotherFakeAPI.call123testSpecialTags(client: client) { (response, error) in
 ```
 
 ### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **client** | [**Client**](Client.md) | client model | 
+This endpoint does not need any parameter.
 
 ### Return type
 
-[**Client**](Client.md)
+[**InlineResponseDefault**](InlineResponseDefault.md)
 
 ### Authorization
 
@@ -52,7 +45,7 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
