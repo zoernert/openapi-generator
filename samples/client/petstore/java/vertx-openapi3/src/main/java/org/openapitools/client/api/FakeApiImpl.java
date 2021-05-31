@@ -363,7 +363,55 @@ public class FakeApiImpl implements FakeApi {
     }
     /**
     * 
-    * For this test, the body for this request much reference a schema named &#x60;File&#x60;.
+    * For this test, the body has to be a binary file.
+        * @param body image to upload (required)
+    * @param resultHandler Asynchronous result handler
+    */
+    public void testBodyWithBinary(AsyncFile body, Handler<AsyncResult<Void>> resultHandler) {
+        testBodyWithBinary(body, null, resultHandler);
+    }
+
+    /**
+    * 
+    * For this test, the body has to be a binary file.
+    * @param body image to upload (required)
+    * @param authInfo per call authentication override.
+    * @param resultHandler Asynchronous result handler
+    */
+    public void testBodyWithBinary(AsyncFile body, ApiClient.AuthInfo authInfo, Handler<AsyncResult<Void>> resultHandler) {
+        Object localVarBody = body;
+        
+        // verify the required parameter 'body' is set
+        if (body == null) {
+            resultHandler.handle(ApiException.fail(400, "Missing the required parameter 'body' when calling testBodyWithBinary"));
+            return;
+        }
+        
+        // create path and map variables
+        String localVarPath = "/fake/body-with-binary";
+
+        // query params
+        List<Pair> localVarQueryParams = new ArrayList<>();
+
+        // header params
+        MultiMap localVarHeaderParams = MultiMap.caseInsensitiveMultiMap();
+        
+        // cookie params
+        MultiMap localVarCookieParams = MultiMap.caseInsensitiveMultiMap();
+        
+        // form params
+        // TODO: sending files within multipart/form-data is not supported yet (because of vertx web-client)
+        Map<String, Object> localVarFormParams = new HashMap<>();
+        
+        String[] localVarAccepts = {  };
+        String[] localVarContentTypes = { "image/png" };
+        String[] localVarAuthNames = new String[] {  };
+
+        apiClient.invokeAPI(localVarPath, "PUT", localVarQueryParams, localVarBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAccepts, localVarContentTypes, localVarAuthNames, authInfo, null, resultHandler);
+    }
+    /**
+    * 
+    * For this test, the body for this request must reference a schema named &#x60;File&#x60;.
         * @param fileSchemaTestClass  (required)
     * @param resultHandler Asynchronous result handler
     */
@@ -373,7 +421,7 @@ public class FakeApiImpl implements FakeApi {
 
     /**
     * 
-    * For this test, the body for this request much reference a schema named &#x60;File&#x60;.
+    * For this test, the body for this request must reference a schema named &#x60;File&#x60;.
     * @param fileSchemaTestClass  (required)
     * @param authInfo per call authentication override.
     * @param resultHandler Asynchronous result handler
@@ -933,7 +981,7 @@ if (param2 != null) localVarFormParams.put("param2", param2);
 
         // query params
         List<Pair> localVarQueryParams = new ArrayList<>();
-        localVarQueryParams.addAll(apiClient.parameterToPairs("multi", "pipe", pipe));
+        localVarQueryParams.addAll(apiClient.parameterToPairs("pipes", "pipe", pipe));
         localVarQueryParams.addAll(apiClient.parameterToPairs("csv", "ioutil", ioutil));
         localVarQueryParams.addAll(apiClient.parameterToPairs("ssv", "http", http));
         localVarQueryParams.addAll(apiClient.parameterToPairs("csv", "url", url));

@@ -1135,7 +1135,7 @@ paths:
       x-accepts: application/json
   /fake/body-with-file-schema:
     put:
-      description: For this test, the body for this request much reference a schema
+      description: For this test, the body for this request must reference a schema
         named `File`.
       operationId: testBodyWithFileSchema
       requestBody:
@@ -1151,12 +1151,32 @@ paths:
       - fake
       x-contentType: application/json
       x-accepts: application/json
+  /fake/body-with-binary:
+    put:
+      description: For this test, the body has to be a binary file.
+      operationId: testBodyWithBinary
+      requestBody:
+        content:
+          image/png:
+            schema:
+              format: binary
+              nullable: true
+              type: string
+        description: image to upload
+        required: true
+      responses:
+        "200":
+          description: Success
+      tags:
+      - fake
+      x-contentType: image/png
+      x-accepts: application/json
   /fake/test-query-paramters:
     put:
       description: To test the collection format in query parameters
       operationId: testQueryParameterCollectionFormat
       parameters:
-      - explode: true
+      - explode: false
         in: query
         name: pipe
         required: true
@@ -1164,7 +1184,7 @@ paths:
           items:
             type: string
           type: array
-        style: form
+        style: pipeDelimited
       - explode: false
         in: query
         name: ioutil

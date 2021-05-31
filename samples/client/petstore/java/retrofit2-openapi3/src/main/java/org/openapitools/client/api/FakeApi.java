@@ -124,7 +124,21 @@ public interface FakeApi {
 
   /**
    * 
-   * For this test, the body for this request much reference a schema named &#x60;File&#x60;.
+   * For this test, the body has to be a binary file.
+   * @param body image to upload (required)
+   * @return Call&lt;Void&gt;
+   */
+  @Headers({
+    "Content-Type:image/png"
+  })
+  @PUT("fake/body-with-binary")
+  Call<Void> testBodyWithBinary(
+    @retrofit2.http.Body File body
+  );
+
+  /**
+   * 
+   * For this test, the body for this request must reference a schema named &#x60;File&#x60;.
    * @param fileSchemaTestClass  (required)
    * @return Call&lt;Void&gt;
    */
@@ -264,7 +278,7 @@ public interface FakeApi {
    */
   @PUT("fake/test-query-paramters")
   Call<Void> testQueryParameterCollectionFormat(
-    @retrofit2.http.Query("pipe") List<String> pipe, @retrofit2.http.Query("ioutil") CSVParams ioutil, @retrofit2.http.Query("http") SSVParams http, @retrofit2.http.Query("url") CSVParams url, @retrofit2.http.Query("context") List<String> context
+    @retrofit2.http.Query("pipe") PIPESParams pipe, @retrofit2.http.Query("ioutil") CSVParams ioutil, @retrofit2.http.Query("http") SSVParams http, @retrofit2.http.Query("url") CSVParams url, @retrofit2.http.Query("context") List<String> context
   );
 
 }

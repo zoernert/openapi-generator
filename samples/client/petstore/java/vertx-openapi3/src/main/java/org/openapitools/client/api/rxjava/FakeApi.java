@@ -353,7 +353,52 @@ public class FakeApi {
     }
     /**
     * 
-    * For this test, the body for this request much reference a schema named &#x60;File&#x60;.
+    * For this test, the body has to be a binary file.
+    * @param body image to upload (required)
+    * @param resultHandler Asynchronous result handler
+    */
+    public void testBodyWithBinary(AsyncFile body, Handler<AsyncResult<Void>> resultHandler) {
+        delegate.testBodyWithBinary(body, resultHandler);
+    }
+
+    /**
+    * 
+    * For this test, the body has to be a binary file.
+    * @param body image to upload (required)
+    * @param authInfo call specific auth overrides
+    * @param resultHandler Asynchronous result handler
+    */
+    public void testBodyWithBinary(AsyncFile body, ApiClient.AuthInfo authInfo, Handler<AsyncResult<Void>> resultHandler) {
+        delegate.testBodyWithBinary(body, authInfo, resultHandler);
+    }
+
+    /**
+    * 
+    * For this test, the body has to be a binary file.
+    * @param body image to upload (required)
+    * @return Asynchronous result handler (RxJava Single)
+    */
+    public Single<Void> rxTestBodyWithBinary(AsyncFile body) {
+        return Single.create(new io.vertx.rx.java.SingleOnSubscribeAdapter<>(fut ->
+            delegate.testBodyWithBinary(body, fut)
+        ));
+    }
+
+    /**
+    * 
+    * For this test, the body has to be a binary file.
+    * @param body image to upload (required)
+    * @param authInfo call specific auth overrides
+    * @return Asynchronous result handler (RxJava Single)
+    */
+    public Single<Void> rxTestBodyWithBinary(AsyncFile body, ApiClient.AuthInfo authInfo) {
+        return Single.create(new io.vertx.rx.java.SingleOnSubscribeAdapter<>(fut ->
+            delegate.testBodyWithBinary(body, authInfo, fut)
+        ));
+    }
+    /**
+    * 
+    * For this test, the body for this request must reference a schema named &#x60;File&#x60;.
     * @param fileSchemaTestClass  (required)
     * @param resultHandler Asynchronous result handler
     */
@@ -363,7 +408,7 @@ public class FakeApi {
 
     /**
     * 
-    * For this test, the body for this request much reference a schema named &#x60;File&#x60;.
+    * For this test, the body for this request must reference a schema named &#x60;File&#x60;.
     * @param fileSchemaTestClass  (required)
     * @param authInfo call specific auth overrides
     * @param resultHandler Asynchronous result handler
@@ -374,7 +419,7 @@ public class FakeApi {
 
     /**
     * 
-    * For this test, the body for this request much reference a schema named &#x60;File&#x60;.
+    * For this test, the body for this request must reference a schema named &#x60;File&#x60;.
     * @param fileSchemaTestClass  (required)
     * @return Asynchronous result handler (RxJava Single)
     */
@@ -386,7 +431,7 @@ public class FakeApi {
 
     /**
     * 
-    * For this test, the body for this request much reference a schema named &#x60;File&#x60;.
+    * For this test, the body for this request must reference a schema named &#x60;File&#x60;.
     * @param fileSchemaTestClass  (required)
     * @param authInfo call specific auth overrides
     * @return Asynchronous result handler (RxJava Single)

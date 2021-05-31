@@ -96,6 +96,11 @@ public interface FakeApi  {
     public OuterObjectWithEnumProperty fakePropertyEnumIntegerSerialize(OuterObjectWithEnumProperty outerObjectWithEnumProperty) throws ApiException, ProcessingException;
 
     @PUT
+    @Path("/body-with-binary")
+    @Consumes({ "image/png" })
+    public void testBodyWithBinary(File body) throws ApiException, ProcessingException;
+
+    @PUT
     @Path("/body-with-file-schema")
     @Consumes({ "application/json" })
     public void testBodyWithFileSchema(FileSchemaTestClass fileSchemaTestClass) throws ApiException, ProcessingException;

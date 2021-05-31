@@ -153,7 +153,19 @@ public interface FakeApi extends ApiClient.Api {
 
   /**
    * 
-   * For this test, the body for this request much reference a schema named &#x60;File&#x60;.
+   * For this test, the body has to be a binary file.
+   * @param body image to upload (required)
+   */
+  @RequestLine("PUT /fake/body-with-binary")
+  @Headers({
+    "Content-Type: image/png",
+    "Accept: application/json",
+  })
+  void testBodyWithBinary(File body);
+
+  /**
+   * 
+   * For this test, the body for this request must reference a schema named &#x60;File&#x60;.
    * @param fileSchemaTestClass  (required)
    */
   @RequestLine("PUT /fake/body-with-file-schema")
@@ -463,7 +475,7 @@ public interface FakeApi extends ApiClient.Api {
    */
   public static class TestQueryParameterCollectionFormatQueryParams extends HashMap<String, Object> {
     public TestQueryParameterCollectionFormatQueryParams pipe(final List<String> value) {
-      put("pipe", EncodingUtils.encodeCollection(value, "multi"));
+      put("pipe", EncodingUtils.encodeCollection(value, "pipes"));
       return this;
     }
     public TestQueryParameterCollectionFormatQueryParams ioutil(final List<String> value) {

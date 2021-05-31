@@ -76,6 +76,7 @@ public class FakeApi {
                 fakeOuterNumberSerialize(),
                 fakeOuterStringSerialize(),
                 fakePropertyEnumIntegerSerialize(),
+                testBodyWithBinary(),
                 testBodyWithFileSchema(),
                 testBodyWithQueryParams(),
                 testClientModel(),
@@ -159,7 +160,17 @@ public class FakeApi {
     }
 
     @ApiOperation(value = "",
-            notes = "For this test, the body for this request much reference a schema named `File`.",
+            notes = "For this test, the body has to be a binary file.",
+            nickname = "testBodyWithBinary",
+            tags = { "fake" })
+    @ApiResponses(value = { 
+            @ApiResponse(code = 200, message = "Success")  })
+    public TestBodyWithBinaryOper testBodyWithBinary() {
+        return new TestBodyWithBinaryOper(createReqSpec());
+    }
+
+    @ApiOperation(value = "",
+            notes = "For this test, the body for this request must reference a schema named `File`.",
             nickname = "testBodyWithFileSchema",
             tags = { "fake" })
     @ApiResponses(value = { 
@@ -768,7 +779,68 @@ public class FakeApi {
     }
     /**
      * 
-     * For this test, the body for this request much reference a schema named &#x60;File&#x60;.
+     * For this test, the body has to be a binary file.
+     *
+     * @see #body image to upload (required)
+     */
+    public static class TestBodyWithBinaryOper implements Oper {
+
+        public static final Method REQ_METHOD = PUT;
+        public static final String REQ_URI = "/fake/body-with-binary";
+
+        private RequestSpecBuilder reqSpec;
+        private ResponseSpecBuilder respSpec;
+
+        public TestBodyWithBinaryOper(RequestSpecBuilder reqSpec) {
+            this.reqSpec = reqSpec;
+            reqSpec.setContentType("image/png");
+            reqSpec.setAccept("application/json");
+            this.respSpec = new ResponseSpecBuilder();
+        }
+
+        /**
+         * PUT /fake/body-with-binary
+         * @param handler handler
+         * @param <T> type
+         * @return type
+         */
+        @Override
+        public <T> T execute(Function<Response, T> handler) {
+            return handler.apply(RestAssured.given().spec(reqSpec.build()).expect().spec(respSpec.build()).when().request(REQ_METHOD, REQ_URI));
+        }
+
+         /**
+         * @param body (File) image to upload (required)
+         * @return operation
+         */
+        public TestBodyWithBinaryOper body(File body) {
+            reqSpec.setBody(body);
+            return this;
+        }
+
+        /**
+         * Customize request specification
+         * @param reqSpecCustomizer consumer to modify the RequestSpecBuilder
+         * @return operation
+         */
+        public TestBodyWithBinaryOper reqSpec(Consumer<RequestSpecBuilder> reqSpecCustomizer) {
+            reqSpecCustomizer.accept(reqSpec);
+            return this;
+        }
+
+        /**
+         * Customize response specification
+         * @param respSpecCustomizer consumer to modify the ResponseSpecBuilder
+         * @return operation
+         */
+        public TestBodyWithBinaryOper respSpec(Consumer<ResponseSpecBuilder> respSpecCustomizer) {
+            respSpecCustomizer.accept(respSpec);
+            return this;
+        }
+    }
+    /**
+     * 
+     * For this test, the body for this request must reference a schema named &#x60;File&#x60;.
      *
      * @see #body  (required)
      */
